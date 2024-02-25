@@ -17,8 +17,17 @@ class Ultility {
         return 0
     }
     
-    static func exitProgram(_ message: String) {
+    static func exitProgram(_ message: String, _ isExit: Bool = true) {
         print(message)
-        exit(1)
+        if isExit {
+            exit(1)
+        }
+    }
+
+    static func isLastElementAnInteger(_ array: [Any]) -> Bool {
+        if let lastElement = array.last {
+            return lastElement is Int
+        }
+        return false
     }
 }

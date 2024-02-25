@@ -18,4 +18,48 @@ class Solution {
         
     }
 
+    func normalizeOps() {
+        var isExecute = false
+        for input in inputs {
+            if var num = input as? Int {
+                if isExecute {
+                    let lastOp = self.ops.popLast()!
+                    let lastNum = self.numbers.popLast()!
+                    if lastOp == "/" {
+                        if num == 0 {
+                            Ultility.exitProgram("Division by zero")
+                        }
+                        num = lastNum / num
+                    } else if lastOp == "x" {
+                        num = lastNum * num
+                    } else {
+                        if num == 0 {
+                            Ultility.exitProgram("Division by zero")
+                        }
+                        num = lastNum % num
+                    }
+                }
+                self.numbers.append(num)
+            }
+            else if let op = input as? Character {
+                self.ops.append(op)
+                isExecute = (op == "-" || op == "+") ? false : true
+            }
+        }
+    }
+
+    func executeOps() -> Int {
+        while self.ops.count > 0 {
+            let op = self.ops.removeFirst()
+            let num1 = self.numbers.removeFirst()
+            let num2 = self.numbers.removeFirst()
+            if op == "+" {
+                self.numbers.insert(num1 + num2, at: 0)
+            } else {
+                self.numbers.insert(num1 - num2, at: 0)
+            }
+        }
+        return self.numbers[0]
+    }
+
 }

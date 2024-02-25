@@ -8,19 +8,31 @@
 
 import Foundation
 
-// var args = ProcessInfo.processInfo.arguments
-// args.removeFirst() // remove the name of the program
-let args = ["-12--451+98- 12 / - 3"]
+var args : [String] = ProcessInfo.processInfo.arguments
+args.removeFirst() // remove the name of the program
+
+let joinedString = args.joined(separator: "")
 let parser = Parser()
 
-for arg in args {
-    let solution = Solution(arg: arg)
-    solution.inputs = parser.parseArg(arg)
-    print(solution.inputs)
-    exit(0)
+let solution = Solution(arg: joinedString)
+
+// Process
+solution.inputs = parser.parseArg(joinedString)
+if (Ultility.isLastElementAnInteger(solution.inputs)) {
+    solution.normalizeOps()
+    print(solution.executeOps())
+}
+else {
+    Ultility.exitProgram("Invalid input", false)
 }
 
 /*
-"12 - 3 + - 45 + 1"
-[12,-,3,+,-45,+,1]
+- Error handle message:
+    - Invalid symbol
+    - Division by 0
+
+- The div operator?
+    - 12 / 5 * 6 = 12 or 14
+
+- How to run the test module
 */
